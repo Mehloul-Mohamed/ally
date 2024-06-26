@@ -28,12 +28,12 @@ positional aguments:
   url                   CTF url
   token                 Your API token
 ```
-`list`:  (must be used while in a CTF directory)  
+`list`:  (must be used while in the directory of a CTF)  
 ```
 usage: butler list
 ```
-`attempt`:  (must be used while in a CTF directory)  
-This will create a directory for the challenge inside the CTF directory and will download the challenges files into it.
+`attempt`:  (must be used while in the directory of a CTF)  
+This will create a directory for the challenge inside the directory of the CTF and will download the files for the challenge into it.
 ```
 usage: butler attempt id
 
