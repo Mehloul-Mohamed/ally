@@ -6,17 +6,32 @@
 > While the tool is somewhat functional currently, it is far from complete and the codebase is in need of a refactor.
 
 ## Usage  
-Current functionality mainly consists of three options:  
-#### start:  
-To start a new ctf  
-You must specify a name, url to the `CTFd` instance, and an api token.   
-  
-This will generate a new directory `~/ctf/{ctf-name}` with two files `challenges.json` containing challenge list and `credentials.txt` which contains the url and api token.  
-#### list:  
-To generate a nice little tree of the available challenges along with their IDs.  
+```
+usage: butler {start,list,attempt}
+positional aguments:
+  {start,list,attempt}
+        start                   Start a CTF
+        list                    Show challenge list
+        attempt                 Attempt a challenge
+```
 
-<img src="./screenshots/list-demo.png" alt="List functionality demo picture" align="middle">
+`start`:
+```
+usage: butler start name url token
 
-#### attempt:  
-This will create a new directory `~/ctf/{ctf-name}` under for the challenge and download the challenge's files onto it.  
-Note that currently download filenames are not preserved.
+positional aguments:
+  name                  CTF name
+  url                   CTF url
+  token                 Your API token
+```
+`list`:  
+```
+usage: butler list
+```
+`attempt`:
+```
+usage: butler attempt id
+
+positional aguments:
+  id                    Challenge id
+```
