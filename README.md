@@ -28,7 +28,7 @@ positional aguments:
 ```
 usage: butler list
 ```
-`attempt`:
+`attempt`:  (must be used while in a CTFs directory)
 ```
 usage: butler attempt id
 
