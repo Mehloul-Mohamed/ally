@@ -2,6 +2,9 @@
 
 <p align="center">Helper utility to make playing CTFs a little less messy.</p>
 
+> [!Important]
+> While the tool is somewhat functional currently, it is far from complete and the codebase is in need of a refactor.
+
 ## Usage  
 Current functionality mainly consists of three options:  
 #### start:  
