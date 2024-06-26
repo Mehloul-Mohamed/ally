@@ -24,7 +24,7 @@ positional aguments:
   url                   CTF url
   token                 Your API token
 ```
-`list`:  
+`list`:  (must be used while in a CTFs directory)
 ```
 usage: butler list
 ```
