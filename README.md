@@ -15,7 +15,7 @@ positional aguments:
         attempt                 Attempt a challenge
 ```
 
-`start`:
+`start`:  
 This will create a directory inside `~/ctf/` with the name of the CTF.  
 Inside the directory there are 2 files 
 - `challenges.json` : Containing a list of challenges
@@ -28,11 +28,11 @@ positional aguments:
   url                   CTF url
   token                 Your API token
 ```
-`list`:  (must be used while in a CTF directory)
+`list`:  (must be used while in a CTF directory)  
 ```
 usage: butler list
 ```
-`attempt`:  (must be used while in a CTF directory)
+`attempt`:  (must be used while in a CTF directory)  
 This will create a directory for the challenge inside the CTF directory and will download the challenges files into it.
 ```
 usage: butler attempt id
