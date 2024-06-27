@@ -5,7 +5,7 @@
 > [!Important]
 > While the tool is somewhat functional currently, it is far from complete and the codebase is in need of a refactor.
 
-## Usage  
+## Usage
 ```
 usage: butler {start,list,attempt}
 positional aguments:
@@ -15,10 +15,9 @@ positional aguments:
         attempt                 Attempt a challenge
 ```
 
-`start`:  
-This will create a directory inside `~/ctf/` with the name of the CTF.  
-Inside the directory there are 2 files 
-- `challenges.json` : Containing a list of challenges
+`start`:
+This will create a directory inside `~/ctf/` with the name of the CTF.
+Inside the directory there is one file:
 - `credentials.txt` : Containing the CTF url and api token
 ```
 usage: butler start name url token
@@ -28,11 +27,11 @@ positional aguments:
   url                   CTF url
   token                 Your API token
 ```
-`list`:  (must be used while in the directory of a CTF)  
+`list`:  (must be used while in the directory of a CTF)
 ```
 usage: butler list
 ```
-`attempt`:  (must be used while in the directory of a CTF)  
+`attempt`:  (must be used while in the directory of a CTF)
 This will create a directory for the challenge inside the directory of the CTF and will download the files for the challenge into it.
 ```
 usage: butler attempt id

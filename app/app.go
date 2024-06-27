@@ -2,10 +2,8 @@ package app
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
-	"io/fs"
 	"net/http"
 	"os"
 	"slices"
@@ -28,24 +26,10 @@ func ParseChallJson(bytes []byte) (*api.CtfdChallListResponse, error) {
 	return &challs, nil
 }
 
-func ReadChallList(url string, token string) ([]byte, error) {
-	// Read challenges from file
-	wd, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
-
-	f := wd + "/challenges.json"
-
-	bytes, err := os.ReadFile(f)
-	if !errors.Is(err, fs.ErrNotExist) {
-		return bytes, nil
-	}
-
-	// If file doesn't exist fetch challenges from server
-	//
+func FetchChallList(url string, token string) ([]byte, error) {
 	// if no credentials are provided, get them from the credentials file
 	if url == "" && token == "" {
+		wd, _ := os.Getwd()
 		bytes, err := os.ReadFile(wd + "/credentials.txt")
 		if err != nil {
 			return nil, err
@@ -54,7 +38,7 @@ func ReadChallList(url string, token string) ([]byte, error) {
 		url = slice[0]
 		token = slice[1]
 	}
-	bytes, err = api.GetChallList(url, token)
+	bytes, err := api.GetChallList(url, token)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +56,7 @@ func StartCtf(name string, url string, token string) error {
 	os.Chdir(d)
 
 	// Fetch challenge list
-	_, err = ReadChallList(url, token)
+	_, err = FetchChallList(url, token)
 	if err != nil {
 		return err
 	}
@@ -90,7 +74,7 @@ func StartCtf(name string, url string, token string) error {
 
 func DisplayChallList() error {
 	// Get challenges
-	bytes, err := ReadChallList("", "")
+	bytes, err := FetchChallList("", "")
 	if err != nil {
 		return err
 	}
@@ -156,7 +140,7 @@ func DisplayChallList() error {
 }
 
 func Attempt(id int) error {
-	challBytes, err := ReadChallList("", "")
+	challBytes, err := FetchChallList("", "")
 	if err != nil {
 		return err
 	}

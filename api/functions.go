@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"time"
 )
 
@@ -27,16 +26,6 @@ func GetChallList(url string, apiToken string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	wd, err := os.Getwd()
-	if err != nil {
-		return nil, err
-	}
-	f, err := os.Create(wd + "/challenges.json")
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-	f.Write(responseBytes)
 	return responseBytes, nil
 }
 
