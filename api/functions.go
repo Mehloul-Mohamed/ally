@@ -10,7 +10,7 @@ import (
 )
 
 func GetChallList(url string, apiToken string) ([]byte, error) {
-	r, err := http.NewRequest("Get", url+"/api/v1/challenges", nil)
+	r, err := http.NewRequest("GET", url+"/api/v1/challenges", nil)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func GetChallList(url string, apiToken string) ([]byte, error) {
 // I found that the challenge endpoint gave me what I need, but this functionality seems undocumented?
 // For now this is WorksOnMyMachine™ certified
 func GetChallengeFiles(id int, url string, apiToken string) (*[]string, error) {
-	r, err := http.NewRequest("Get", fmt.Sprintf("%s/api/v1/challenges/%d", url, id), nil)
+	r, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v1/challenges/%d", url, id), nil)
 	if err != nil {
 		return nil, err
 	}
