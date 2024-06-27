@@ -26,7 +26,7 @@ func help(f string) {
 	case "info":
 		fmt.Println("usage: ally info")
 	case "main":
-		fmt.Println("usage: ally {start,list,attempt}")
+		fmt.Println("usage: ally {start,list,attempt,info}")
 		fmt.Println("positional aguments:")
 		fmt.Println("  {start,list,attempt}")
 		fmt.Println("\tstart\t\t\tStart a CTF")
