@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Mehloul-Mohamed/butler/api"
-	"github.com/Mehloul-Mohamed/butler/styles"
+	"github.com/Mehloul-Mohamed/ally/api"
+	"github.com/Mehloul-Mohamed/ally/styles"
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/tree"
 )
@@ -43,33 +43,6 @@ func FetchChallList(url string, token string) ([]byte, error) {
 		return nil, err
 	}
 	return bytes, nil
-}
-
-func StartCtf(name string, url string, token string) error {
-	// Setup directory
-	home, _ := os.UserHomeDir()
-	d := home + "/ctf/" + name
-	err := os.Mkdir(d, 0777)
-	if err != nil {
-		return err
-	}
-	os.Chdir(d)
-
-	// Fetch challenge list
-	_, err = FetchChallList(url, token)
-	if err != nil {
-		return err
-	}
-
-	// Store credentials
-	f, err := os.Create("credentials.txt")
-	if err != nil {
-		return err
-	}
-
-	defer f.Close()
-	f.WriteString(url + "\n" + token)
-	return nil
 }
 
 func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.Tree {
@@ -105,6 +78,33 @@ func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.T
 		rootTree.Child(categoryTree)
 	}
 	return rootTree
+}
+
+func StartCtf(name string, url string, token string) error {
+	// Setup directory
+	home, _ := os.UserHomeDir()
+	d := home + "/ctf/" + name
+	err := os.Mkdir(d, 0777)
+	if err != nil {
+		return err
+	}
+	os.Chdir(d)
+
+	// Fetch challenge list
+	_, err = FetchChallList(url, token)
+	if err != nil {
+		return err
+	}
+
+	// Store credentials
+	f, err := os.Create("credentials.txt")
+	if err != nil {
+		return err
+	}
+
+	defer f.Close()
+	f.WriteString(url + "\n" + token)
+	return nil
 }
 
 func DisplayChallList() error {

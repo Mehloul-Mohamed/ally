@@ -29,10 +29,6 @@ func GetChallList(url string, apiToken string) ([]byte, error) {
 	return responseBytes, nil
 }
 
-// Just realized with the default config I don't have permission to get the challenges files from
-// the challenge files endpoint as a regular user.... ahhhhhhhh
-// I found that the challenge endpoint gave me what I need, but this functionality seems undocumented?
-// For now this is WorksOnMyMachine™ certified
 func GetChallenge(id int, url string, apiToken string) (*CtfdChallResponse, error) {
 	r, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v1/challenges/%d", url, id), nil)
 	if err != nil {

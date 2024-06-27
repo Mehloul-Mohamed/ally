@@ -1,4 +1,4 @@
-module github.com/Mehloul-Mohamed/butler
+module github.com/Mehloul-Mohamed/ally
 
 go 1.22.4
 

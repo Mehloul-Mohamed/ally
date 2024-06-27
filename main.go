@@ -6,25 +6,25 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Mehloul-Mohamed/butler/app"
+	"github.com/Mehloul-Mohamed/ally/app"
 )
 
 func help(f string) {
 	switch f {
 	case "start":
-		fmt.Print("usage: butler start name url token\n\n")
+		fmt.Print("usage: ally start name url token\n\n")
 		fmt.Println("positional aguments:")
 		fmt.Println("  name\t\t\tCTF name")
 		fmt.Println("  url\t\t\tCTF url")
 		fmt.Println("  token\t\t\tYour API token")
 	case "list":
-		fmt.Println("usage: butler list")
+		fmt.Println("usage: ally list")
 	case "attempt":
-		fmt.Print("usage: butler attempt id\n\n")
+		fmt.Print("usage: ally attempt id\n\n")
 		fmt.Println("positional aguments:")
 		fmt.Println("  id\t\t\tChallenge id")
 	case "main":
-		fmt.Println("usage: butler {start,list,attempt}")
+		fmt.Println("usage: ally {start,list,attempt}")
 		fmt.Println("positional aguments:")
 		fmt.Println("  {start,list,attempt}")
 		fmt.Println("\tstart\t\t\tStart a CTF")

@@ -5,26 +5,25 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22.4'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.4"
 
-    - name: Build
-      run: go build -v .
+      - name: Build
+        run: go build -v .
 
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v4.3.3
-      with:
-        path: ./butler          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          path: ./ally

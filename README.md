@@ -1,4 +1,4 @@
-<h1 align="center"> butler </h1>
+<h1 align="center"> Ally </h1>
 
 <p align="center">Helper utility to make playing CTFs a little less messy.</p>
 
@@ -7,7 +7,7 @@
 
 ## Usage
 ```
-usage: butler {start,list,attempt}
+usage: ally {start,list,attempt}
 positional aguments:
   {start,list,attempt}
         start                   Start a CTF
@@ -20,7 +20,7 @@ This will create a directory inside `~/ctf/` with the name of the CTF.
 Inside the directory there is one file:
 - `credentials.txt` : Containing the CTF url and api token
 ```
-usage: butler start name url token
+usage: ally start name url token
 
 positional aguments:
   name                  CTF name
@@ -29,12 +29,12 @@ positional aguments:
 ```
 `list`:  (must be used while in the directory of a CTF)
 ```
-usage: butler list
+usage: ally list
 ```
-`attempt`:  (must be used while in the directory of a CTF)  
+`attempt`:  (must be used while in the directory of a CTF)
 This will create a directory for the challenge inside the directory of the CTF and will download the files for the challenge into it.
 ```
-usage: butler attempt id
+usage: ally attempt id
 
 positional aguments:
   id                    Challenge id
