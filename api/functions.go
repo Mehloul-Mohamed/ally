@@ -33,7 +33,7 @@ func GetChallList(url string, apiToken string) ([]byte, error) {
 // the challenge files endpoint as a regular user.... ahhhhhhhh
 // I found that the challenge endpoint gave me what I need, but this functionality seems undocumented?
 // For now this is WorksOnMyMachine™ certified
-func GetChallengeFiles(id int, url string, apiToken string) (*[]string, error) {
+func GetChallenge(id int, url string, apiToken string) (*CtfdChallResponse, error) {
 	r, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v1/challenges/%d", url, id), nil)
 	if err != nil {
 		return nil, err
@@ -57,5 +57,5 @@ func GetChallengeFiles(id int, url string, apiToken string) (*[]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &challenge.Data.Files, nil
+	return &challenge, nil
 }

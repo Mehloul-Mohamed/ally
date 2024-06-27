@@ -72,37 +72,7 @@ func StartCtf(name string, url string, token string) error {
 	return nil
 }
 
-func DisplayChallList() error {
-	// Get challenges
-	bytes, err := FetchChallList("", "")
-	if err != nil {
-		return err
-	}
-	challs, err := ParseChallJson(bytes)
-	if err != nil {
-		return err
-	}
-
-	// Build Challenge Map & Categories Slice
-	// We have to maintain a seperate categories slice so we can sort them and have a consitant way to loop over the map
-	var categories []string
-	challMap := make(map[string][]api.CtfdChall)
-	t := ""
-	for _, c := range challs.Data {
-		t = c.Category
-		if t == "" {
-			t = "Uncategorized"
-			challMap[t] = append(challMap[t], c)
-		} else {
-			challMap[t] = append(challMap[t], c)
-		}
-		if !slices.Contains(categories, t) {
-			categories = append(categories, t)
-		}
-	}
-	// Sort Categories
-	sort.Strings(categories)
-
+func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.Tree {
 	// Build & Render Tree
 	ind := func(_ tree.Children, _ int) string { return "    " }
 	rootTree := tree.New().
@@ -134,21 +104,44 @@ func DisplayChallList() error {
 		}
 		rootTree.Child(categoryTree)
 	}
+	return rootTree
+}
 
+func DisplayChallList() error {
+	bytes, err := FetchChallList("", "")
+	if err != nil {
+		return err
+	}
+	challs, err := ParseChallJson(bytes)
+	if err != nil {
+		return err
+	}
+
+	// Build Challenge Map & Categories Slice
+	// We have to maintain a seperate categories slice so we can sort them and have a consitant way to loop over the map
+	var categories []string
+	challMap := make(map[string][]api.CtfdChall)
+	t := ""
+	for _, c := range challs.Data {
+		t = c.Category
+		if t == "" {
+			t = "Uncategorized"
+			challMap[t] = append(challMap[t], c)
+		} else {
+			challMap[t] = append(challMap[t], c)
+		}
+		if !slices.Contains(categories, t) {
+			categories = append(categories, t)
+		}
+	}
+	sort.Strings(categories)
+
+	rootTree := buildTree(categories, challMap)
 	fmt.Println(rootTree)
 	return nil
 }
 
 func Attempt(id int) error {
-	challBytes, err := FetchChallList("", "")
-	if err != nil {
-		return err
-	}
-	challs, err := ParseChallJson(challBytes)
-	if err != nil {
-		return err
-	}
-
 	wd, _ := os.Getwd()
 	bytes, err := os.ReadFile(wd + "/credentials.txt")
 	if err != nil {
@@ -159,32 +152,28 @@ func Attempt(id int) error {
 	url := slice[0]
 	token := slice[1]
 
-	for _, c := range challs.Data {
-		if c.ID == id {
-			os.Mkdir(wd+"/"+c.Name, 0777)
-			os.Chdir(wd + "/" + c.Name)
-			files, err := api.GetChallengeFiles(id, url, token)
-			if err != nil {
-				return err
-			}
-			for i, file := range *files {
-				resp, err := http.Get(url + file)
-				if err != nil {
-					return err
-				}
-				fileBytes, err := io.ReadAll(resp.Body)
-				if err != nil {
-					return err
-				}
-				f, err := os.Create(fmt.Sprintf("file-%d", i))
-				if err != nil {
-					return err
-				}
-				defer f.Close()
-				f.Write(fileBytes)
-			}
-			break
+	chall, err := api.GetChallenge(id, url, token)
+	if err != nil {
+		return err
+	}
+	os.Mkdir(wd+"/"+chall.Data.Name, 0777)
+	os.Chdir(wd + "/" + chall.Data.Name)
+
+	for i, file := range chall.Data.Files {
+		resp, err := http.Get(url + file)
+		if err != nil {
+			return err
 		}
+		fileBytes, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		f, err := os.Create(fmt.Sprintf("file-%d", i))
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+		f.Write(fileBytes)
 	}
 	return nil
 }
