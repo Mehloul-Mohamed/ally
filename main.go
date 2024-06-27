@@ -72,7 +72,10 @@ func main() {
 		if err != nil {
 			panic("id must be an integer")
 		}
-		app.Attempt(id)
+		err = app.Attempt(id)
+		if err != nil {
+			panic(err)
+		}
 	default:
 		help("main")
 	}
