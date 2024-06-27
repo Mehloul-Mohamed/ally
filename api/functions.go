@@ -5,10 +5,24 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"strings"
 	"time"
 )
 
-func GetChallList(url string, apiToken string) ([]byte, error) {
+func GetChallList(url string, apiToken string) (*CtfdChallListResponse, error) {
+	// If no url or token are given read them from the credentials file
+	if url == "" && apiToken == "" {
+		wd, _ := os.Getwd()
+		bytes, err := os.ReadFile(wd + "/credentials.txt")
+		if err != nil {
+			return nil, err
+		}
+		slice := strings.Split(string(bytes), "\n")
+		url = slice[0]
+		apiToken = slice[1]
+	}
+
 	r, err := http.NewRequest("GET", url+"/api/v1/challenges", nil)
 	if err != nil {
 		return nil, err
@@ -22,11 +36,17 @@ func GetChallList(url string, apiToken string) ([]byte, error) {
 		return nil, err
 	}
 
+	// Parse Json
 	responseBytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err
 	}
-	return responseBytes, nil
+	var challs CtfdChallListResponse
+	err = json.Unmarshal(responseBytes, &challs)
+	if err != nil {
+		return nil, err
+	}
+	return &challs, nil
 }
 
 func GetChallenge(id int, url string, apiToken string) (*CtfdChallResponse, error) {
@@ -44,6 +64,7 @@ func GetChallenge(id int, url string, apiToken string) (*CtfdChallResponse, erro
 		return nil, err
 	}
 
+	// Parse Json
 	responseBytes, err := io.ReadAll(response.Body)
 	if err != nil {
 		return nil, err

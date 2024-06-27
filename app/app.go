@@ -1,7 +1,6 @@
 package app
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -16,34 +15,6 @@ import (
 	"github.com/charmbracelet/lipgloss"
 	"github.com/charmbracelet/lipgloss/tree"
 )
-
-func ParseChallJson(bytes []byte) (*api.CtfdChallListResponse, error) {
-	var challs api.CtfdChallListResponse
-	err := json.Unmarshal(bytes, &challs)
-	if err != nil {
-		return nil, err
-	}
-	return &challs, nil
-}
-
-func FetchChallList(url string, token string) ([]byte, error) {
-	// if no credentials are provided, get them from the credentials file
-	if url == "" && token == "" {
-		wd, _ := os.Getwd()
-		bytes, err := os.ReadFile(wd + "/credentials.txt")
-		if err != nil {
-			return nil, err
-		}
-		slice := strings.Split(string(bytes), "\n")
-		url = slice[0]
-		token = slice[1]
-	}
-	bytes, err := api.GetChallList(url, token)
-	if err != nil {
-		return nil, err
-	}
-	return bytes, nil
-}
 
 func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.Tree {
 	// Build & Render Tree
@@ -90,12 +61,6 @@ func StartCtf(name string, url string, token string) error {
 	}
 	os.Chdir(d)
 
-	// Fetch challenge list
-	_, err = FetchChallList(url, token)
-	if err != nil {
-		return err
-	}
-
 	// Store credentials
 	f, err := os.Create("credentials.txt")
 	if err != nil {
@@ -108,11 +73,7 @@ func StartCtf(name string, url string, token string) error {
 }
 
 func DisplayChallList() error {
-	bytes, err := FetchChallList("", "")
-	if err != nil {
-		return err
-	}
-	challs, err := ParseChallJson(bytes)
+	challs, err := api.GetChallList("", "")
 	if err != nil {
 		return err
 	}
