@@ -27,17 +27,22 @@ positional aguments:
   url                   CTF url
   token                 Your API token
 ```
+### CTF Commands (must be used within the directory of a CTF):
 `list`:  
-(must be used while in the directory of a CTF)  
+lists the available challenges
 ```
 usage: ally list
 ```
 `attempt`:  
-(must be used while in the directory of a CTF)  
 This will create a directory for the challenge inside the directory of the CTF and will download the files for the challenge into it.
 ```
 usage: ally attempt id
 
 positional aguments:
   id                    Challenge id
+```
+`info`:  (Credit to [@shadow1004](https://github.com/shadow1004) for the idea)   
+Shows the top three teams on the scoreboard + general stats about the user's team
+```
+usage: ally info
 ```
