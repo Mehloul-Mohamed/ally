@@ -15,8 +15,8 @@ positional aguments:
         attempt                 Attempt a challenge
 ```
 
-`start`:
-This will create a directory inside `~/ctf/` with the name of the CTF.
+`start`:  
+This will create a directory inside `~/ctf/` with the name of the CTF.  
 Inside the directory there is one file:
 - `credentials.txt` : Containing the CTF url and api token
 ```
@@ -27,11 +27,13 @@ positional aguments:
   url                   CTF url
   token                 Your API token
 ```
-`list`:  (must be used while in the directory of a CTF)
+`list`:  
+(must be used while in the directory of a CTF)  
 ```
 usage: ally list
 ```
-`attempt`:  (must be used while in the directory of a CTF)
+`attempt`:  
+(must be used while in the directory of a CTF)  
 This will create a directory for the challenge inside the directory of the CTF and will download the files for the challenge into it.
 ```
 usage: ally attempt id
