@@ -31,7 +31,7 @@ positional aguments:
 ```
 usage: butler list
 ```
-`attempt`:  (must be used while in the directory of a CTF)
+`attempt`:  (must be used while in the directory of a CTF)  
 This will create a directory for the challenge inside the directory of the CTF and will download the files for the challenge into it.
 ```
 usage: butler attempt id
