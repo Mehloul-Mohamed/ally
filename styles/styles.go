@@ -11,9 +11,9 @@ var Unsolved lipgloss.Style = lipgloss.NewStyle().
 
 var Solved lipgloss.Style = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#8FBCBB")).
+	Strikethrough(true).
 	MarginLeft(1).
 	MarginRight(1).
-	Strikethrough(true).
 	Inherit(Unsolved)
 
 var Category lipgloss.Style = lipgloss.NewStyle().
@@ -24,12 +24,19 @@ var Category lipgloss.Style = lipgloss.NewStyle().
 
 var Header lipgloss.Style = lipgloss.NewStyle().
 	Bold(true).
-	MarginLeft(1).
-	MarginRight(1).
 	Inherit(Unsolved)
 
 var Id lipgloss.Style = lipgloss.NewStyle().
-	Bold(false).
-	MarginLeft(1).
-	MarginRight(1).
-	Inherit(Unsolved)
+	Inherit(Category)
+
+var First lipgloss.Style = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#EBCB8B")).
+	Bold(true)
+
+var Second lipgloss.Style = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#D8DEE9")).
+	Bold(true)
+
+var Third lipgloss.Style = lipgloss.NewStyle().
+	Foreground(lipgloss.Color("#D08770")).
+	Bold(true)

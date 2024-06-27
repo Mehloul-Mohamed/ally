@@ -1,5 +1,7 @@
 package api
 
+import "time"
+
 // Mostly Auto-Generated from https://mholt.github.io/json-to-go/
 type CtfdChallListResponse struct {
 	Success bool        `json:"success"`
@@ -74,5 +76,78 @@ type CtfdChallResponse struct {
 		Tags       []any    `json:"tags"`
 		Hints      []any    `json:"hints"`
 		View       string   `json:"view"`
+	} `json:"data"`
+}
+
+type CtfdTeamResponse struct {
+	Success bool `json:"success"`
+	Data    struct {
+		Email       any    `json:"email"`
+		Members     []int  `json:"members"`
+		BracketID   any    `json:"bracket_id"`
+		Fields      []any  `json:"fields"`
+		Affiliation any    `json:"affiliation"`
+		Website     any    `json:"website"`
+		Country     any    `json:"country"`
+		ID          int    `json:"id"`
+		CaptainID   int    `json:"captain_id"`
+		Name        string `json:"name"`
+		OauthID     any    `json:"oauth_id"`
+		Place       string `json:"place"`
+		Score       int    `json:"score"`
+	} `json:"data"`
+}
+
+type CtfdScoreBoardResponse struct {
+	Success bool `json:"success"`
+	Data    struct {
+		Num1 struct {
+			ID          int    `json:"id"`
+			AccountURL  string `json:"account_url"`
+			Name        string `json:"name"`
+			Score       int    `json:"score"`
+			BracketID   any    `json:"bracket_id"`
+			BracketName any    `json:"bracket_name"`
+			Solves      []struct {
+				ChallengeID int       `json:"challenge_id"`
+				AccountID   int       `json:"account_id"`
+				TeamID      int       `json:"team_id"`
+				UserID      int       `json:"user_id"`
+				Value       int       `json:"value"`
+				Date        time.Time `json:"date"`
+			} `json:"solves"`
+		} `json:"1"`
+		Num2 struct {
+			ID          int    `json:"id"`
+			AccountURL  string `json:"account_url"`
+			Name        string `json:"name"`
+			Score       int    `json:"score"`
+			BracketID   any    `json:"bracket_id"`
+			BracketName any    `json:"bracket_name"`
+			Solves      []struct {
+				ChallengeID int       `json:"challenge_id"`
+				AccountID   int       `json:"account_id"`
+				TeamID      int       `json:"team_id"`
+				UserID      int       `json:"user_id"`
+				Value       int       `json:"value"`
+				Date        time.Time `json:"date"`
+			} `json:"solves"`
+		} `json:"2"`
+		Num3 struct {
+			ID          int    `json:"id"`
+			AccountURL  string `json:"account_url"`
+			Name        string `json:"name"`
+			Score       int    `json:"score"`
+			BracketID   any    `json:"bracket_id"`
+			BracketName any    `json:"bracket_name"`
+			Solves      []struct {
+				ChallengeID int       `json:"challenge_id"`
+				AccountID   int       `json:"account_id"`
+				TeamID      int       `json:"team_id"`
+				UserID      int       `json:"user_id"`
+				Value       int       `json:"value"`
+				Date        time.Time `json:"date"`
+			} `json:"solves"`
+		} `json:"3"`
 	} `json:"data"`
 }

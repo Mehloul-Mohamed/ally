@@ -13,6 +13,7 @@ import (
 	"github.com/Mehloul-Mohamed/ally/api"
 	"github.com/Mehloul-Mohamed/ally/styles"
 	"github.com/charmbracelet/lipgloss"
+	"github.com/charmbracelet/lipgloss/list"
 	"github.com/charmbracelet/lipgloss/tree"
 )
 
@@ -136,5 +137,34 @@ func Attempt(id int) error {
 		defer f.Close()
 		f.Write(fileBytes)
 	}
+	return nil
+}
+
+func DisplayTeamInfo() error {
+	topThree, err := api.GetTopThree("", "")
+	if err != nil {
+		return err
+	}
+	team, err := api.GetTeamInfo("", "")
+	if err != nil {
+		return err
+	}
+
+	scoreboard := list.New(
+		styles.Header.MarginLeft(0).Render("ScoreBoard: "),
+		list.New(
+			"🥇 "+styles.First.Render(topThree.Data.Num1.Name),
+			"🥈 "+styles.Second.Render(topThree.Data.Num2.Name),
+			"🥉 "+styles.Third.Render(topThree.Data.Num3.Name),
+		).Enumerator(list.Roman),
+	)
+	stats := list.New(
+		styles.Header.MarginLeft(0).Render("Team Stats:"),
+		list.New(fmt.Sprintf("ID: %d", team.Data.ID)),
+		list.New(fmt.Sprintf("Score: %d", team.Data.Score)),
+		list.New(fmt.Sprintf("Place: %s", team.Data.Place)),
+	)
+	fmt.Print(scoreboard, "\n\n")
+	fmt.Println(stats)
 	return nil
 }

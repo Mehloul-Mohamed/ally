@@ -23,6 +23,8 @@ func help(f string) {
 		fmt.Print("usage: ally attempt id\n\n")
 		fmt.Println("positional aguments:")
 		fmt.Println("  id\t\t\tChallenge id")
+	case "info":
+		fmt.Println("usage: ally info")
 	case "main":
 		fmt.Println("usage: ally {start,list,attempt}")
 		fmt.Println("positional aguments:")
@@ -30,6 +32,7 @@ func help(f string) {
 		fmt.Println("\tstart\t\t\tStart a CTF")
 		fmt.Println("\tlist\t\t\tShow challenge list")
 		fmt.Println("\tattempt\t\t\tAttempt a challenge")
+		fmt.Println("\tinfo\t\t\tShow scoreboard & team stats")
 	}
 }
 
@@ -73,6 +76,16 @@ func main() {
 			panic("id must be an integer")
 		}
 		err = app.Attempt(id)
+		if err != nil {
+			panic(err)
+		}
+	// Credit to shadow1004 on GitHub for the idea
+	case "info":
+		if len(os.Args) != 2 {
+			help("info")
+			return
+		}
+		err := app.DisplayTeamInfo()
 		if err != nil {
 			panic(err)
 		}
