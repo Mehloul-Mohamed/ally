@@ -159,7 +159,7 @@ func Attempt(id int) error {
 	os.Mkdir(wd+"/"+chall.Data.Name, 0777)
 	os.Chdir(wd + "/" + chall.Data.Name)
 
-	for i, file := range chall.Data.Files {
+	for _, file := range chall.Data.Files {
 		resp, err := http.Get(url + file)
 		if err != nil {
 			return err
@@ -168,7 +168,7 @@ func Attempt(id int) error {
 		if err != nil {
 			return err
 		}
-		f, err := os.Create(fmt.Sprintf("file-%d", i))
+		f, err := os.Create(fmt.Sprintf("%s", strings.Split(strings.Split(file, "/")[3], "?")[0]))
 		if err != nil {
 			return err
 		}
