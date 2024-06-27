@@ -13,6 +13,7 @@ positional aguments:
         start                   Start a CTF
         list                    Show challenge list
         attempt                 Attempt a challenge
+        info                    Show scoreboard & team stats
 ```
 
 `start`:  
