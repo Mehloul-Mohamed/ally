@@ -27,21 +27,6 @@ type CtfdChall struct {
 	SolvedByMe     bool         `json:"solved_by_me"`
 }
 
-type CtfdHintResponse struct {
-	Success bool `json:"success"`
-	Data    []struct {
-		Content      string `json:"content"`
-		Cost         int    `json:"cost"`
-		Challenge    int    `json:"challenge"`
-		Type         string `json:"type"`
-		Requirements struct {
-			Prerequisites []any `json:"prerequisites"`
-		} `json:"requirements"`
-		ChallengeID int `json:"challenge_id"`
-		ID          int `json:"id"`
-	} `json:"data"`
-}
-
 type CtfdChallResponse struct {
 	Success bool `json:"success"`
 	Data    struct {
