@@ -31,12 +31,13 @@ var Id lipgloss.Style = lipgloss.NewStyle().
 
 var First lipgloss.Style = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#EBCB8B")).
+	Width(10).
 	Bold(true)
 
 var Second lipgloss.Style = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#D8DEE9")).
-	Bold(true)
+	Inherit(First)
 
 var Third lipgloss.Style = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#D08770")).
-	Bold(true)
+	Inherit(First)

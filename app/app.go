@@ -153,9 +153,9 @@ func DisplayTeamInfo() error {
 	scoreboard := list.New(
 		styles.Header.MarginLeft(0).Render("ScoreBoard: "),
 		list.New(
-			"🥇 "+styles.First.Render(topThree.Data.Num1.Name),
-			"🥈 "+styles.Second.Render(topThree.Data.Num2.Name),
-			"🥉 "+styles.Third.Render(topThree.Data.Num3.Name),
+			"🥇 "+styles.First.Render(topThree.Data.Num1.Name)+styles.First.Render(strconv.Itoa(topThree.Data.Num1.Score), "points"),
+			"🥈 "+styles.Second.Render(topThree.Data.Num2.Name)+styles.Second.Render(strconv.Itoa(topThree.Data.Num2.Score), "points"),
+			"🥉 "+styles.Third.Render(topThree.Data.Num3.Name)+styles.Third.Render(strconv.Itoa(topThree.Data.Num3.Score), "points"),
 		).Enumerator(list.Roman),
 	)
 	stats := list.New(
