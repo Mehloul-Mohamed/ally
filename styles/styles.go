@@ -31,7 +31,7 @@ var Id lipgloss.Style = lipgloss.NewStyle().
 
 var First lipgloss.Style = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#EBCB8B")).
-	Width(10).
+	Width(50).
 	Bold(true)
 
 var Second lipgloss.Style = lipgloss.NewStyle().
