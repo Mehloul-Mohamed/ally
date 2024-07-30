@@ -13,7 +13,7 @@ func help(f string) {
 	switch f {
 	case "start":
 		fmt.Print("usage: ally start name url token\n\n")
-		fmt.Println("positional aguments:")
+		fmt.Println("positional arguments:")
 		fmt.Println("  name\t\t\tCTF name")
 		fmt.Println("  url\t\t\tCTF url")
 		fmt.Println("  token\t\t\tYour API token")
@@ -21,13 +21,13 @@ func help(f string) {
 		fmt.Println("usage: ally list")
 	case "attempt":
 		fmt.Print("usage: ally attempt id\n\n")
-		fmt.Println("positional aguments:")
+		fmt.Println("positional arguments:")
 		fmt.Println("  id\t\t\tChallenge id")
 	case "info":
 		fmt.Println("usage: ally info")
 	case "main":
 		fmt.Println("usage: ally {start,list,attempt,info}")
-		fmt.Println("positional aguments:")
+		fmt.Println("positional arguments:")
 		fmt.Println("  {start,list,attempt}")
 		fmt.Println("\tstart\t\t\tStart a CTF")
 		fmt.Println("\tlist\t\t\tShow challenge list")
