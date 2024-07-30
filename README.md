@@ -8,7 +8,7 @@
 ## Usage
 ```
 usage: ally {start,list,attempt}
-positional aguments:
+positional arguments:
   {start,list,attempt,info}
         start                   Start a CTF
         list                    Show challenge list
@@ -23,7 +23,7 @@ Inside the directory there is one file:
 ```
 usage: ally start name url token
 
-positional aguments:
+positional arguments:
   name                  CTF name
   url                   CTF url
   token                 Your API token
@@ -39,7 +39,7 @@ This will create a directory for the challenge inside the directory of the CTF a
 ```
 usage: ally attempt id
 
-positional aguments:
+positional arguments:
   id                    Challenge id
 ```
 `info`:  (Credit to [@shadow1004](https://github.com/shadow1004) for the idea)  
