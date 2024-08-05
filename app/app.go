@@ -68,7 +68,7 @@ func StartCtf(name string, url string, token string) error {
 	if err != nil {
 		return err
 	}
-	os.Chdir(d)
+	os.Chdir(d + name)
 
 	// Store credentials
 	f, err := os.Create("credentials.txt")
