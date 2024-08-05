@@ -55,8 +55,16 @@ func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.T
 func StartCtf(name string, url string, token string) error {
 	// Setup directory
 	home, _ := os.UserHomeDir()
-	d := home + "/ctf/" + name
-	err := os.Mkdir(d, 0777)
+	d := home + "/ctf/"
+	_, err := os.Stat(d)
+	if err != nil {
+		err = os.Mkdir(d, 0777)
+		if err != nil {
+			return err
+		}
+	}
+
+	err = os.Mkdir(d+name, 0777)
 	if err != nil {
 		return err
 	}
@@ -130,7 +138,7 @@ func Attempt(id int) error {
 		if err != nil {
 			return err
 		}
-		f, err := os.Create(fmt.Sprintf("%s", strings.Split(strings.Split(file, "/")[3], "?")[0]))
+		f, err := os.Create(strings.Split(strings.Split(file, "/")[3], "?")[0])
 		if err != nil {
 			return err
 		}
@@ -166,5 +174,17 @@ func DisplayTeamInfo() error {
 	)
 	fmt.Print(scoreboard, "\n\n")
 	fmt.Println(stats)
+	return nil
+}
+
+func FetchAll() error {
+	challs, err := api.GetChallList("", "")
+	if err != nil {
+		return err
+	}
+
+	for _, chall := range challs.Data {
+		Attempt(chall.ID)
+	}
 	return nil
 }
