@@ -42,6 +42,11 @@ usage: ally attempt id
 positional arguments:
   id                    Challenge id
 ```
+`fetch`:  
+Fetch all challenges
+```
+usage: ally fetch
+```
 `info`:  (Credit to [@shadow1004](https://github.com/shadow1004) for the idea)  
 Shows the top three teams on the scoreboard + general stats about the user's team
 ```

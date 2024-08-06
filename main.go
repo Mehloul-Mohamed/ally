@@ -28,6 +28,8 @@ func help(f string) {
 		fmt.Println("usage: ally attempt id\n\n" +
 			"positional arguments:\n" +
 			"  id\t\t\tChallenge id")
+	case "fetch":
+		fmt.Println("usage: ally fetch")
 	case "info":
 		fmt.Println("usage: ally info")
 	case "main":
@@ -37,7 +39,8 @@ func help(f string) {
 			"\tstart\t\t\tStart a CTF\n" +
 			"\tlist\t\t\tShow challenge list\n" +
 			"\tattempt\t\t\tAttempt a challenge\n" +
-			"\tinfo\t\t\tShow scoreboard & team stats")
+			"\tinfo\t\t\tShow scoreboard & team stats\n" +
+			"\tfetch\t\t\tFetch all challenges")
 	}
 }
 
@@ -107,6 +110,15 @@ func main() {
 			log.Fatalln("id must be an integer")
 		}
 		err = app.Attempt(id, Url, Token)
+		if err != nil {
+			panic(err)
+		}
+	case "fetch":
+		if len(os.Args) != 2 {
+			help("fetch")
+			return
+		}
+		err := app.FetchAll(Url, Token)
 		if err != nil {
 			panic(err)
 		}

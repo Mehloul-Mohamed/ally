@@ -123,7 +123,7 @@ func Attempt(id int, url, token string) error {
 		return err
 	}
 	os.Mkdir(wd+"/"+chall.Data.Name, 0777)
-	os.Chdir(wd + "/" + chall.Data.Name)
+	wd = wd + "/" + chall.Data.Name
 
 	// Download Files
 	for _, file := range chall.Data.Files {
@@ -135,7 +135,7 @@ func Attempt(id int, url, token string) error {
 		if err != nil {
 			return err
 		}
-		f, err := os.Create(strings.Split(strings.Split(file, "/")[3], "?")[0])
+		f, err := os.Create(wd + "/" + strings.Split(strings.Split(file, "/")[3], "?")[0])
 		if err != nil {
 			return err
 		}
@@ -171,5 +171,19 @@ func DisplayTeamInfo(url, token string) error {
 	)
 	fmt.Print(scoreboard, "\n\n")
 	fmt.Println(stats)
+	return nil
+}
+
+func FetchAll(url, token string) error {
+	challenges, err := api.GetChallList(url, token)
+	if err != nil {
+		return err
+	}
+	for _, chal := range challenges.Data {
+		err = Attempt(chal.ID, url, token)
+		if err != nil {
+			return err
+		}
+	}
 	return nil
 }
