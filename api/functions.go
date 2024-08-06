@@ -5,32 +5,10 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
-	"strings"
 	"time"
 )
 
-func getCredentials() ([]string, error) {
-	wd, _ := os.Getwd()
-	bytes, err := os.ReadFile(wd + "/credentials.txt")
-	if err != nil {
-		return nil, err
-	}
-	slice := strings.Split(string(bytes), "\n")
-	return slice, nil
-}
-
 func GetChallList(url string, apiToken string) (*CtfdChallListResponse, error) {
-	// If no url or token are given read them from the credentials file
-	if url == "" || apiToken == "" {
-		credentials, err := getCredentials()
-		if err != nil {
-			return nil, err
-		}
-		url = credentials[0]
-		apiToken = credentials[1]
-	}
-
 	r, err := http.NewRequest("GET", url+"/api/v1/challenges", nil)
 	if err != nil {
 		return nil, err
@@ -86,15 +64,6 @@ func GetChallenge(id int, url string, apiToken string) (*CtfdChallResponse, erro
 }
 
 func GetTeamInfo(url string, apiToken string) (*CtfdTeamResponse, error) {
-	if url == "" || apiToken == "" {
-		credentials, err := getCredentials()
-		if err != nil {
-			return nil, err
-		}
-		url = credentials[0]
-		apiToken = credentials[1]
-	}
-
 	r, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v1/teams/me", url), nil)
 	if err != nil {
 		return nil, err
@@ -122,15 +91,6 @@ func GetTeamInfo(url string, apiToken string) (*CtfdTeamResponse, error) {
 }
 
 func GetTopThree(url string, apiToken string) (*CtfdScoreBoardResponse, error) {
-	if url == "" || apiToken == "" {
-		credentials, err := getCredentials()
-		if err != nil {
-			return nil, err
-		}
-		url = credentials[0]
-		apiToken = credentials[1]
-	}
-
 	r, err := http.NewRequest("GET", fmt.Sprintf("%s/api/v1/scoreboard/top/3", url), nil)
 	if err != nil {
 		return nil, err

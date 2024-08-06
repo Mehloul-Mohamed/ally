@@ -33,7 +33,7 @@ func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.T
 			Indenter(ind)
 		// Add challenges to category
 		for _, c := range challMap[v] {
-			// This should be done in a simpler manner, but lipgloss is acting weirdly so I'm stuck with this
+			// This should be done in a simpler manner, but lipgloss is acting weirdly so I'm stuck with this(Probably I'm the issue but whatever)
 			var style lipgloss.Style
 			if c.SolvedByMe {
 				style = styles.Solved
@@ -81,8 +81,8 @@ func StartCtf(name string, url string, token string) error {
 	return nil
 }
 
-func DisplayChallList() error {
-	challs, err := api.GetChallList("", "")
+func DisplayChallList(url, token string) error {
+	challs, err := api.GetChallList(url, token)
 	if err != nil {
 		return err
 	}
@@ -111,17 +111,8 @@ func DisplayChallList() error {
 	return nil
 }
 
-func Attempt(id int) error {
+func Attempt(id int, url, token string) error {
 	wd, _ := os.Getwd()
-	bytes, err := os.ReadFile(wd + "/credentials.txt")
-	if err != nil {
-		return err
-	}
-
-	slice := strings.Split(string(bytes), "\n")
-	url := slice[0]
-	token := slice[1]
-
 	chall, err := api.GetChallenge(id, url, token)
 	if err != nil {
 		return err
@@ -129,6 +120,7 @@ func Attempt(id int) error {
 	os.Mkdir(wd+"/"+chall.Data.Name, 0777)
 	os.Chdir(wd + "/" + chall.Data.Name)
 
+	// Download Files
 	for _, file := range chall.Data.Files {
 		resp, err := http.Get(url + file)
 		if err != nil {
@@ -148,12 +140,12 @@ func Attempt(id int) error {
 	return nil
 }
 
-func DisplayTeamInfo() error {
-	topThree, err := api.GetTopThree("", "")
+func DisplayTeamInfo(url, token string) error {
+	topThree, err := api.GetTopThree(url, token)
 	if err != nil {
 		return err
 	}
-	team, err := api.GetTeamInfo("", "")
+	team, err := api.GetTeamInfo(url, token)
 	if err != nil {
 		return err
 	}
@@ -174,17 +166,5 @@ func DisplayTeamInfo() error {
 	)
 	fmt.Print(scoreboard, "\n\n")
 	fmt.Println(stats)
-	return nil
-}
-
-func FetchAll() error {
-	challs, err := api.GetChallList("", "")
-	if err != nil {
-		return err
-	}
-
-	for _, chall := range challs.Data {
-		Attempt(chall.ID)
-	}
 	return nil
 }

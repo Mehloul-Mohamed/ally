@@ -9,30 +9,32 @@ import (
 	"github.com/Mehloul-Mohamed/ally/app"
 )
 
+var Url, Token string
+
 func help(f string) {
 	switch f {
 	case "start":
-		fmt.Print("usage: ally start name url token\n\n")
-		fmt.Println("positional arguments:")
-		fmt.Println("  name\t\t\tCTF name")
-		fmt.Println("  url\t\t\tCTF url")
-		fmt.Println("  token\t\t\tYour API token")
+		fmt.Println("usage: ally start name url token\n\n" +
+			"positional arguments:\n" +
+			"  name\t\t\tCTF name\n" +
+			"  url\t\t\tCTF url\n" +
+			"  token\t\t\tYour API token")
 	case "list":
 		fmt.Println("usage: ally list")
 	case "attempt":
-		fmt.Print("usage: ally attempt id\n\n")
-		fmt.Println("positional arguments:")
-		fmt.Println("  id\t\t\tChallenge id")
+		fmt.Println("usage: ally attempt id\n\n" +
+			"positional arguments:\n" +
+			"  id\t\t\tChallenge id")
 	case "info":
 		fmt.Println("usage: ally info")
 	case "main":
-		fmt.Println("usage: ally {start,list,attempt,info}")
-		fmt.Println("positional arguments:")
-		fmt.Println("  {start,list,attempt}")
-		fmt.Println("\tstart\t\t\tStart a CTF")
-		fmt.Println("\tlist\t\t\tShow challenge list")
-		fmt.Println("\tattempt\t\t\tAttempt a challenge")
-		fmt.Println("\tinfo\t\t\tShow scoreboard & team stats")
+		fmt.Println("usage: ally {start,list,attempt,info}\n" +
+			"positional arguments:\n" +
+			"  {start,list,attempt}\n" +
+			"\tstart\t\t\tStart a CTF\n" +
+			"\tlist\t\t\tShow challenge list\n" +
+			"\tattempt\t\t\tAttempt a challenge\n" +
+			"\tinfo\t\t\tShow scoreboard & team stats")
 	}
 }
 
@@ -41,8 +43,8 @@ func main() {
 		help("main")
 		return
 	}
-	switch os.Args[1] {
-	case "start":
+
+	if os.Args[1] == "start" {
 		if len(os.Args) != 5 {
 			help("start")
 			return
@@ -57,12 +59,27 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		return
+	}
+
+	// Other Options
+	// Read Credentials
+	wd, _ := os.Getwd()
+	bytes, err := os.ReadFile(wd + "/credentials.txt")
+	if err != nil {
+		panic(err)
+	}
+	slice := strings.Split(string(bytes), "\n")
+	Url = slice[0]
+	Token = slice[1]
+
+	switch os.Args[1] {
 	case "list":
 		if len(os.Args) != 2 {
 			help("list")
 			return
 		}
-		err := app.DisplayChallList()
+		err := app.DisplayChallList(Url, Token)
 		if err != nil {
 			panic(err)
 		}
@@ -75,7 +92,7 @@ func main() {
 		if err != nil {
 			panic("id must be an integer")
 		}
-		err = app.Attempt(id)
+		err = app.Attempt(id, Url, Token)
 		if err != nil {
 			panic(err)
 		}
@@ -85,7 +102,7 @@ func main() {
 			help("info")
 			return
 		}
-		err := app.DisplayTeamInfo()
+		err := app.DisplayTeamInfo(Url, Token)
 		if err != nil {
 			panic(err)
 		}

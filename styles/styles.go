@@ -29,9 +29,10 @@ var Header lipgloss.Style = lipgloss.NewStyle().
 var Id lipgloss.Style = lipgloss.NewStyle().
 	Inherit(Category)
 
+// Scoreboard styles
 var First lipgloss.Style = lipgloss.NewStyle().
 	Foreground(lipgloss.Color("#EBCB8B")).
-	Width(50).
+	Width(10).
 	Bold(true)
 
 var Second lipgloss.Style = lipgloss.NewStyle().
