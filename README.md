@@ -7,14 +7,14 @@
 
 ## Usage
 ```
-usage: ally {start,list,attempt}
+usage: ally {start,list,attempt,info}
 positional arguments:
-  {start,list,attempt,info}
-        start                   Start a CTF
-        list                    Show challenge list
-        attempt                 Attempt a challenge
-        info                    Show scoreboard & team stats
-        fetch			              Fetch all challenges
+  {start,list,attempt}
+	start			Start a CTF
+	list			Show challenge list
+	attempt			Attempt a challenge
+	info			Show scoreboard & team stats
+	fetch			Fetch all challenges
 ```
 
 `start`:  
