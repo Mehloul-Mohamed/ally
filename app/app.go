@@ -1,8 +1,10 @@
 package app
 
 import (
+	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"slices"
@@ -17,6 +19,7 @@ import (
 	"github.com/charmbracelet/lipgloss/tree"
 )
 
+// Function to produce a fancy tree to display challenges
 func buildTree(categories []string, challMap map[string][]api.CtfdChall) *tree.Tree {
 	// Build & Render Tree
 	ind := func(_ tree.Children, _ int) string { return "    " }
@@ -57,11 +60,13 @@ func StartCtf(name string, url string, token string) error {
 	home, _ := os.UserHomeDir()
 	d := home + "/ctf/"
 	_, err := os.Stat(d)
-	if err != nil {
+	if errors.Is(err, os.ErrNotExist) {
+		log.Println("~/ctf missing. Creating it...")
 		err = os.Mkdir(d, 0777)
-		if err != nil {
-			return err
-		}
+	}
+
+	if err != nil {
+		return err
 	}
 
 	err = os.Mkdir(d+name, 0777)

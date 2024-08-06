@@ -1,7 +1,10 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"io/fs"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -55,7 +58,12 @@ func main() {
 		if name == "" || url == "" || token == "" {
 			help("main")
 		}
+
 		err := app.StartCtf(name, url, token)
+		if errors.Is(err, fs.ErrExist) {
+			log.Fatalln("Ctf already started")
+		}
+
 		if err != nil {
 			panic(err)
 		}
@@ -66,9 +74,15 @@ func main() {
 	// Read Credentials
 	wd, _ := os.Getwd()
 	bytes, err := os.ReadFile(wd + "/credentials.txt")
+
+	if errors.Is(err, os.ErrNotExist) {
+		log.Fatalln("Credentials file not found")
+	}
+
 	if err != nil {
 		panic(err)
 	}
+
 	slice := strings.Split(string(bytes), "\n")
 	Url = slice[0]
 	Token = slice[1]
