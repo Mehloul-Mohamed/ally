@@ -104,7 +104,7 @@ func main() {
 		}
 		id, err := strconv.Atoi(os.Args[2])
 		if err != nil {
-			panic("id must be an integer")
+			log.Fatalln("id must be an integer")
 		}
 		err = app.Attempt(id, Url, Token)
 		if err != nil {
