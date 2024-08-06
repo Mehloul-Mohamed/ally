@@ -14,6 +14,7 @@ positional arguments:
         list                    Show challenge list
         attempt                 Attempt a challenge
         info                    Show scoreboard & team stats
+        fetch			              Fetch all challenges
 ```
 
 `start`:  
